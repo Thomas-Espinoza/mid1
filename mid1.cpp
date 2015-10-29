@@ -9,12 +9,12 @@ using namespace std;
 
 
 double milesToKm(double miles);
-bool AlmostEqualRelative(double A, double B, double maxRelDiff);
+bool almostEqualRelative(double A, double B, double maxRelDiff);
 
 int main(int argc, char *argv[])
 {
   double miles = 1.0;
-  double testCheck = atof(argv[1]);
+  double inputNum = atof(argv[1]);
   double tolerance = atof(argv[2]);
   double kilo;
   
@@ -55,10 +55,10 @@ int main(int argc, char *argv[])
     
     
     
-  if (testCheck > 1){
+  if (inputNum > 1){ //Regular functionality
       
     if (argc > 1) {
-      miles = atof(argv[1]);
+      miles = inputNum;
 
       cout << miles << " miles = ";
       cout << milesToKm(miles) << " Km" << endl;
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     }
   }
     
-  if (testCheck < 0) {
+  if (inputNum < 0) { //Unit test functionality if input is < 1
       
     cout << "Unit test of milesToKm() function..." << endl << endl;
     cout << "       Miles   Function" << endl;
@@ -77,12 +77,12 @@ int main(int argc, char *argv[])
       count = i + 1;
       miles = (count * .1);
       kilo = milesToKm(miles);
-      isEqual = AlmostEqualRelative(Values[i], kilo, tolerance);
+      isEqual = almostEqualRelative(Values[i], kilo, tolerance);
 
-      if (isEqual) { 
+      if (isEqual) { //if within tolerance, print
         printf ("%3i    %4.1f    %f\n", count, miles, kilo);
       }
-      else {      
+      else { //if not within tolerance, print bad value and increment our bad count     
         printf ("%3i    %4.1f    %f  <--- bad value\n", count, miles, kilo);
         badcount += 1;
       } 
@@ -95,13 +95,13 @@ int main(int argc, char *argv[])
   }
 }
 
-bool AlmostEqualRelative(double A, double B, double maxRelDiff)
+bool almostEqualRelative(double A, double B, double maxRelDiff)
 {
-  double diff = fabs(A - B);
+  double diff = fabs(A - B);  //find the absolute value of the difference of two numbers
   A = fabs(A);
   B = fabs(B);
   
-  if (diff <= maxRelDiff){
+  if (diff <= maxRelDiff){  //compare to our tolerance
     return true;
   }
   return false;
